@@ -53,8 +53,20 @@ const StepperCalculator = () => {
     else setCompleted(true);
   };
 
+  const getSelectionLabels = () => {
+    const h = housingOptions.find(o => o.key === selection.housing)?.label || "";
+    const r = routeOptions.find(o => o.key === selection.route)?.label || "";
+    const c = selection.complexity.map(k => complexityOptions.find(o => o.key === k)?.label).join(", ");
+    return { h, r, c };
+  };
+
+  const { h, r, c } = getSelectionLabels();
   const whatsappUrl = `https://wa.me/34600000000?text=${encodeURIComponent(
-    `Hola! Quiero cotizar una mudanza: ${selection.housing}, ${selection.route}, ${selection.complexity.join(", ")}`
+    `Hola! Mudança Fácil Barcelona:
+- Tipus: ${h}
+- Ruta: ${r}
+- Detalls: ${c}
+Vull sol·licitar una cotització oficial.`
   )}`;
 
   return (
@@ -86,7 +98,7 @@ const StepperCalculator = () => {
                     key={opt.key}
                     onClick={() => setSelection(p => ({ ...p, housing: opt.key }))}
                     className={`glass-hover p-6 rounded-xl flex flex-col items-center gap-3 transition-all ${selection.housing === opt.key ? "border-primary glow-primary" : ""}`}
-                    aria-label={opt.label}
+                    aria-label={`${s.step1}: ${opt.label}`}
                   >
                     <opt.icon className={`w-8 h-8 ${selection.housing === opt.key ? "text-primary" : "text-muted-foreground"}`} />
                     <span className="text-sm font-medium">{opt.label}</span>
@@ -97,7 +109,7 @@ const StepperCalculator = () => {
                     key={opt.key}
                     onClick={() => setSelection(p => ({ ...p, route: opt.key }))}
                     className={`glass-hover p-6 rounded-xl flex flex-col items-center gap-3 transition-all ${selection.route === opt.key ? "border-primary glow-primary" : ""}`}
-                    aria-label={opt.label}
+                    aria-label={`${s.step2}: ${opt.label}`}
                   >
                     <opt.icon className={`w-8 h-8 ${selection.route === opt.key ? "text-primary" : "text-muted-foreground"}`} />
                     <span className="text-sm font-medium">{opt.label}</span>
@@ -108,7 +120,7 @@ const StepperCalculator = () => {
                     key={opt.key}
                     onClick={() => toggleComplexity(opt.key)}
                     className={`glass-hover p-6 rounded-xl flex flex-col items-center gap-3 transition-all ${selection.complexity.includes(opt.key) ? "border-primary glow-primary" : ""}`}
-                    aria-label={opt.label}
+                    aria-label={`${s.step3}: ${opt.label}`}
                   >
                     <opt.icon className={`w-8 h-8 ${selection.complexity.includes(opt.key) ? "text-primary" : "text-muted-foreground"}`} />
                     <span className="text-sm font-medium">{opt.label}</span>
