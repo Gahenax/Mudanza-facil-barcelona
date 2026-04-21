@@ -1,5 +1,5 @@
 import { Check, MessageCircle } from "lucide-react";
-import { useLanguage } from "@/context/LanguageContext";
+import { useLanguage, contactInfo } from "@/context/LanguageContext";
 import { Button } from "@/components/ui/button";
 
 const PricingSection = () => {
@@ -20,7 +20,7 @@ const PricingSection = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {p.plans.map((plan, index) => {
-            const whatsappUrl = `https://wa.me/34677389365?text=${encodeURIComponent(
+            const whatsappUrl = `https://wa.me/${contactInfo.whatsappId}?text=${encodeURIComponent(
               `Hola! Me interesa el plan "${plan.name}" (a partir de ${plan.price}). ¿Podéis darme más información?`
             )}`;
 

@@ -2,81 +2,91 @@ import os
 import ftplib
 import sys
 
+def load_env(filepath: str) -> dict:
+    """Carga credenciales desde .env.deploy (fuente única de verdad)."""
+    env = {}
+    if not os.path.exists(filepath):
+        print(f"❌ Archivo {filepath} no encontrado.")
+        sys.exit(1)
+    with open(filepath, "r") as f:
+        for line in f:
+            line = line.strip()
+            if not line or line.startswith("#"):
+                continue
+            if "=" in line:
+                key, val = line.split("=", 1)
+                env[key.strip()] = val.strip()
+    return env
+
 def deploy_mudanza():
-    # FTP Connection Details
-    FTP_HOST = "151.106.106.26"
-    PASS = "Luisdaniel949."
-    # Usernames to try
-    USERS = ["u314799704.gahenaxaisolutions.xyz", "u314799704.limpiamaxweb.com"]
-    LOCAL_DIR = r"C:\Users\jotam\OneDrive\Desktop\GahenaxAI\move-fluent-barcelona\dist"
+    # Cargar credenciales desde .env.deploy (NO hardcodeadas aquí)
+    env_path = os.path.join(os.path.dirname(__file__), ".env.deploy")
+    env = load_env(env_path)
 
-    print(f"🚀 Iniciando despliegue de MUDANZA FÁCIL BCN: {FTP_HOST}")
-    
+    FTP_HOST    = env.get("FTP_HOST", "").replace("ftp://", "")
+    FTP_USER    = env.get("FTP_USER", "")
+    FTP_PASS    = env.get("FTP_PASS", "")
+    REMOTE_PATH = env.get("REMOTE_PATH", "/domains/mudanzafacilbcn.com/public_html")
+    LOCAL_DIR   = os.path.join(os.path.dirname(__file__), "dist")
+
+    print(f"🚀 Iniciando despliegue de MUDANZA FÁCIL BCN → {FTP_HOST}")
+    print(f"👤 Usuario: {FTP_USER}")
+    print(f"📁 Destino remoto: {REMOTE_PATH}")
+
     if not os.path.exists(LOCAL_DIR):
-        print(f"❌ Error: La carpeta local {LOCAL_DIR} no existe.")
-        return
-
-    ftp = None
-    connected = False
-    
-    for user in USERS:
-        try:
-            print(f"👤 Intentando usuario: {user}...")
-            ftp = ftplib.FTP(FTP_HOST)
-            ftp.login(user, PASS)
-            print(f"✅ Conexión establecida con {user}!")
-            connected = True
-            break
-        except Exception as e:
-            print(f"⚠️ Falló {user}: {e}")
-            if ftp:
-                try: ftp.quit()
-                except: pass
-
-    if not connected:
-        print("❌ Ningún usuario funcionó. Revisa la contraseña.")
-        return
+        print(f"❌ Error: La carpeta dist/ no existe. Ejecuta 'npm run build' primero.")
+        sys.exit(1)
 
     try:
-        # Navigate to public_html
-        try:
-            ftp.cwd('public_html')
-            print("📁 Entrando en public_html...")
-        except Exception as e:
-            print(f"⚠️ No se pudo entrar en public_html: {e}")
+        ftp = ftplib.FTP(FTP_HOST)
+        ftp.login(FTP_USER, FTP_PASS)
+        print(f"✅ Conexión FTP establecida.")
+    except Exception as e:
+        print(f"❌ Error de conexión FTP: {e}")
+        sys.exit(1)
 
-        def upload_directory(local_path):
-            # ... (same logic)
+    try:
+        # Navegar al directorio destino
+        for part in REMOTE_PATH.strip("/").split("/"):
+            try:
+                ftp.cwd(part)
+            except Exception:
+                ftp.mkd(part)
+                ftp.cwd(part)
+        print(f"📂 Dentro de: {REMOTE_PATH}")
+
+        def upload_directory(local_path: str):
             for item in os.listdir(local_path):
-                l_item_path = os.path.join(local_path, item)
-                if os.path.isfile(l_item_path):
-                    with open(l_item_path, 'rb') as f:
-                        print(f"  ⬆️ Subiendo: {item}")
+                l_item = os.path.join(local_path, item)
+                if item in [".git", "node_modules", "__pycache__"]:
+                    continue
+                if os.path.isfile(l_item):
+                    with open(l_item, "rb") as f:
+                        print(f"  ⬆️ {item}")
                         try:
-                            ftp.storbinary(f'STOR {item}', f)
+                            ftp.storbinary(f"STOR {item}", f)
                         except Exception as e:
                             print(f"  ❌ Error subiendo {item}: {e}")
-                elif os.path.isdir(l_item_path):
-                    if item in ['.git', 'node_modules']: continue
-                    print(f"  📂 Creando directorio: {item}")
+                elif os.path.isdir(l_item):
+                    print(f"  📂 {item}/")
                     try:
                         ftp.mkd(item)
-                    except:
-                        pass # Ya existe
-                    
+                    except Exception:
+                        pass  # Ya existe
                     ftp.cwd(item)
-                    upload_directory(l_item_path)
-                    ftp.cwd('..')
+                    upload_directory(l_item)
+                    ftp.cwd("..")
 
-        # Iniciar subida recursiva
         upload_directory(LOCAL_DIR)
-
         ftp.quit()
+
         print("\n✨ ¡DESPLIEGUE COMPLETADO! ✨")
-        print(f"🌐 La web ya debería estar LIVE en: https://gahenaxaisolutions.xyz")
+        print(f"🌐 Verifica en: https://mudanzafacilbcn.com")
 
     except Exception as e:
         print(f"❌ Error crítico durante el despliegue: {e}")
+        sys.exit(1)
 
 if __name__ == "__main__":
     deploy_mudanza()
+

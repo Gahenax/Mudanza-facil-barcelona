@@ -1,15 +1,18 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 
 type Lang = "es" | "cat";
 
-const contactInfo = {
+// ✅ Fuente única de verdad para datos de contacto
+export const contactInfo = {
   phone: "677389365",
+  phoneFormatted: "677 389 365",
   whatsappId: "34677389365",
+  whatsappUrl: "https://wa.me/34677389365",
   email: "mudanzasfacil@gmail.com",
   instagram: "mudanzasfacilbcn",
 };
 
-const translations = {
+export const translations = {
   nav: {
     es: { services: "Servicios", calculator: "Cotizador", contact: "Contacto" },
     cat: { services: "Serveis", calculator: "Cotitzador", contact: "Contacte" },
@@ -217,7 +220,22 @@ interface LanguageContextType {
 const LanguageContext = createContext<LanguageContextType | null>(null);
 
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [lang, setLang] = useState<Lang>("es");
+  const [lang, setLang] = useState<Lang>(() => {
+    try {
+      return (localStorage.getItem("mudanza_lang") as Lang) || "es";
+    } catch {
+      return "es"; // Fallback si localStorage está bloqueado
+    }
+  });
+
+  useEffect(() => {
+    try {
+      localStorage.setItem("mudanza_lang", lang);
+    } catch {
+      // Silencio si no está disponible
+    }
+  }, [lang]);
+
   return (
     <LanguageContext.Provider value={{ lang, setLang, t: translations }}>
       {children}

@@ -1,5 +1,5 @@
 import { ArrowRight, Truck, ArrowDown } from "lucide-react";
-import { useLanguage } from "@/context/LanguageContext";
+import { useLanguage, contactInfo } from "@/context/LanguageContext";
 import { Button } from "@/components/ui/button";
 
 const HeroSection = () => {
@@ -41,7 +41,7 @@ const HeroSection = () => {
                 <Truck className="text-primary w-6 h-6" />
               </div>
               <div>
-                <p className="text-foreground font-black text-lg uppercase leading-none tracking-tight">677 389 365</p>
+                <p className="text-foreground font-black text-lg uppercase leading-none tracking-tight">{contactInfo.phoneFormatted}</p>
                 <p className="text-muted-foreground text-[10px] font-bold uppercase tracking-widest mt-1">SOPORTE 24/7</p>
               </div>
             </div>

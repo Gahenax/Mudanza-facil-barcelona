@@ -1,4 +1,5 @@
 import { Truck, Instagram, Mail, Phone } from "lucide-react";
+import { contactInfo } from "@/context/LanguageContext";
 
 const Footer = () => (
   <footer className="py-16 border-t border-gray-100 bg-white">
@@ -14,16 +15,16 @@ const Footer = () => (
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-8 w-full md:w-auto">
           <div className="flex flex-col gap-4">
             <span className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-300">Contacto</span>
-            <a href="tel:677389365" className="flex items-center gap-2 text-base font-black text-gray-700 hover:text-accent transition-colors">
-              <Phone className="w-5 h-5" /> 677 389 365
+            <a href={`tel:${contactInfo.phone}`} className="flex items-center gap-2 text-base font-black text-gray-700 hover:text-accent transition-colors">
+              <Phone className="w-5 h-5" /> {contactInfo.phoneFormatted}
             </a>
-            <a href="mailto:mudanzasfacil@gmail.com" className="flex items-center gap-2 text-base font-bold text-gray-600 hover:text-accent transition-colors">
+            <a href={`mailto:${contactInfo.email}`} className="flex items-center gap-2 text-base font-bold text-gray-600 hover:text-accent transition-colors">
               <Mail className="w-5 h-5" /> Email
             </a>
           </div>
           <div className="flex flex-col gap-4">
             <span className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-300">Social</span>
-            <a href="https://instagram.com/mudanzasfacilbcn" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm font-bold text-gray-600 hover:text-accent transition-colors">
+            <a href={`https://instagram.com/${contactInfo.instagram}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm font-bold text-gray-600 hover:text-accent transition-colors">
               <Instagram className="w-4 h-4" /> Instagram
             </a>
           </div>
