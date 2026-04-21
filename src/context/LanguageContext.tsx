@@ -20,6 +20,7 @@ export const translations = {
   hero: {
     es: {
       title: "Mudamos tu mundo con exactitud profesional",
+      titleAccent: "profesional",
       subtitle: "Logística de mudanzas premium en Barcelona. Tecnología, cuidado y eficiencia en cada bulto.",
       cta: "Quiero Cotizar",
       price: "Desde 89,99€",
@@ -27,6 +28,7 @@ export const translations = {
     },
     cat: {
       title: "Mudem el teu món amb exactitud professional",
+      titleAccent: "professional",
       subtitle: "Logística de mudances premium a Barcelona. Tecnologia, cura i eficiència a cada bulto.",
       cta: "Vull Cotitzar",
       price: "Des de 89,99€",

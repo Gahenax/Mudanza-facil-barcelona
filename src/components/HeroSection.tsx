@@ -23,8 +23,8 @@ const HeroSection = () => {
         <div className="max-w-3xl">
           
           <h1 className="text-5xl md:text-8xl font-heading font-black text-foreground uppercase tracking-tighter leading-[0.85] mb-8 animate-slide-up">
-            {h.title.split('profesional')[0]}
-            <span className="text-primary">profesional</span>
+            {h.title.split(h.titleAccent)[0]}
+            <span className="text-primary">{h.titleAccent}</span>
           </h1>
           
 
