@@ -12,21 +12,23 @@ const FeaturesSection = () => {
   ];
 
   return (
-    <section id="features" className="py-24 relative">
+    <section id="features" className="py-24 relative bg-white">
       <div className="container mx-auto px-4">
-        <h2 className="font-heading font-bold text-3xl md:text-4xl text-center mb-16">{f.title}</h2>
-        <div className="grid md:grid-cols-3 gap-6">
+        <h2 className="font-heading font-black text-3xl md:text-5xl text-center mb-16 tracking-tight uppercase">
+          ¿Por qué elegir <span className="text-primary">Mudanza Fácil</span>?
+        </h2>
+        <div className="grid md:grid-cols-3 gap-8">
           {features.map((feat, i) => (
             <div
               key={i}
-              className="glass-hover p-8 rounded-xl group"
+              className="p-10 rounded-3xl bg-white border border-gray-100 transition-all duration-300 hover:shadow-2xl hover:shadow-primary/5 hover:-translate-y-2 group"
               style={{ animationDelay: `${i * 0.1}s` }}
             >
-              <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-5 group-hover:bg-primary/20 transition-colors">
-                <feat.icon className="w-6 h-6 text-primary" />
+              <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform shadow-inner">
+                <feat.icon className="w-7 h-7 text-primary" />
               </div>
-              <h3 className="font-heading font-semibold text-xl mb-3">{feat.title}</h3>
-              <p className="text-muted-foreground text-sm leading-relaxed">{feat.desc}</p>
+              <h3 className="font-heading font-bold text-2xl mb-4 text-foreground uppercase tracking-tight">{feat.title}</h3>
+              <p className="text-muted-foreground text-base leading-relaxed font-medium">{feat.desc}</p>
             </div>
           ))}
         </div>
