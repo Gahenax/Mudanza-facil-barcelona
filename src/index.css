@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -106,3 +106,31 @@
     box-shadow: 0 0 10px hsl(var(--primary) / 0.3);
   }
 }
+
+/* =============================================
+   ui-ux-pro-max — Animation System
+   Todas las animaciones documentadas aquí
+   ============================================= */
+
+/* slide-up: usado en HeroSection h1 y CTA */
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.65s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Delay utilities para staggered animations */
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-500 { animation-delay: 500ms; }

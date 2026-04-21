@@ -72,7 +72,7 @@ const ReviewsSection = () => {
           {reviews.map((review, index) => (
             <div
               key={index}
-              className="bg-white rounded-[2rem] p-8 shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-100 flex flex-col gap-5"
+              className="cursor-pointer bg-white rounded-[2rem] p-8 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col gap-5"
             >
               {/* Stars */}
               <div className="flex gap-1">

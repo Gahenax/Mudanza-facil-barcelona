@@ -15,13 +15,13 @@ const FeaturesSection = () => {
     <section id="features" className="py-24 relative bg-white">
       <div className="container mx-auto px-4">
         <h2 className="font-heading font-black text-3xl md:text-5xl text-center mb-16 tracking-tight uppercase">
-          ¿Por qué elegir <span className="text-primary">Mudanza Fácil</span>?
+          {f.title}
         </h2>
         <div className="grid md:grid-cols-3 gap-8">
           {features.map((feat, i) => (
             <div
               key={i}
-              className="p-10 rounded-3xl bg-white border border-gray-100 transition-all duration-300 hover:shadow-2xl hover:shadow-primary/5 hover:-translate-y-2 group"
+              className="cursor-pointer p-10 rounded-3xl bg-white border border-gray-100 transition-all duration-300 hover:shadow-2xl hover:shadow-primary/5 hover:-translate-y-2 group"
               style={{ animationDelay: `${i * 0.1}s` }}
             >
               <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform shadow-inner">

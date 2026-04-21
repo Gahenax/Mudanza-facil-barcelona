@@ -14,7 +14,7 @@ const TrustSection = () => {
     {
       icon: Truck,
       title: trust.fleet,
-      color: "bg-primary/10 text-primary-foreground",
+      color: "bg-primary/10 text-primary",
     },
     {
       icon: Award,
@@ -28,7 +28,7 @@ const TrustSection = () => {
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {items.map((item, index) => (
-            <div key={index} className="flex items-center gap-4 group transition-all hover:translate-y-[-2px]">
+            <div key={index} className="flex items-center gap-4 group transition-all hover:translate-y-[-2px] cursor-default">
               <div className={`w-12 h-12 rounded-2xl ${item.color} flex items-center justify-center p-3 shadow-sm group-hover:shadow-md transition-all`}>
       <item.icon className="w-6 h-6" />
               </div>
